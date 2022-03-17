@@ -1,12 +1,35 @@
 package main
 
 import (
+	"encoding/json"
 	"errors"
 	"net/http"
 	"strconv"
 
 	"github.com/julienschmidt/httprouter"
 )
+
+func (app *application) writeJSON(w http.ResponseWriter, status int, data interface{}, headers http.Header) error {
+	// Encoding the data to JSON, returning the error if there was one.
+	js, err := json.Marshal(data)
+	if err != nil {
+		return err
+	}
+
+	// Append a newline to make it easier to view in terminal applications.
+	js = append(js, '\n')
+
+	for key, value := range headers {
+		// JSON Response
+		w.Header()[key] = value
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(status)
+	w.Write(js)
+
+	return nil
+}
 
 // Retrieve the "id" URL parameter from the current request context, then convert it to
 // an integer and return it. If the operation isn't successful, return 0 and an error.
