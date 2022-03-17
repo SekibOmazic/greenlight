@@ -9,7 +9,11 @@ import (
 	"github.com/julienschmidt/httprouter"
 )
 
-func (app *application) writeJSON(w http.ResponseWriter, status int, data interface{}, headers http.Header) error {
+// Define an envelopt type.
+type envelope map[string]interface{}
+
+// Change the data parameter to have the type envelope instead of interface{}
+func (app *application) writeJSON(w http.ResponseWriter, status int, data envelope, headers http.Header) error {
 	// Encoding the data to JSON, returning the error if there was one.
 	js, err := json.Marshal(data)
 	if err != nil {
