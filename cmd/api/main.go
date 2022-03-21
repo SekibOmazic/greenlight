@@ -10,6 +10,8 @@ import (
 	"os"
 	"time"
 
+	"github.com/sekibomazic/greenlight/internal/data"
+
 	// Import the pq driver so that it can register itself with the database/sql
 	// package. Note that we alias this import to the blank identifier, to stop the Go
 	// compiler complaining that the package isn't being used.
@@ -44,6 +46,7 @@ type config struct {
 type application struct {
 	config config
 	logger *log.Logger
+	models data.Models
 }
 
 func main() {
@@ -87,12 +90,13 @@ func main() {
 	app := &application{
 		config: cfg,
 		logger: logger,
+		models: data.NewModels(db),
 	}
 
-	// Declate a new servermux and add a /v1/healthcheck route wich dispatches
+	// Declare a new servermux and add a /v1/healthcheck route wich dispatches
 	// to the healthcheck Handler method
-	mux := http.NewServeMux()
-	mux.HandleFunc("/v1/healthcheck", app.healthcheckHandler)
+	// mux := http.NewServeMux()
+	// mux.HandleFunc("/v1/healthcheck", app.healthcheckHandler)
 
 	// Use httprouter instance returned by app.routes() as the server handler
 	srv := &http.Server{

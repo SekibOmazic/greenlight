@@ -28,6 +28,9 @@ go run ./cmd/api
 export BODY='{"title":"","year":1000,"runtime":"-123 mins","genres":["sci-fi","sci-fi"]}'
 
 export BODY_OK='{"title":"Moana","year":2016,"runtime":"107 mins","genres":["animation","adventure"]}'
+export BODY_OK2='{"title":"Black Panther","year":2018,"runtime":"134 mins","genres":["action","adventure"]}'
+export BODY_OK3='{"title":"Deadpool","year":2016, "runtime":"108 mins","genres":["action","comedy"]}'
+export BODY_OK4='{"title":"The Breakfast Club","year":1986, "runtime":"96 mins","genres":["drama"]}'
 
 curl -i -d "$BODY" localhost:4000/v1/movies
 ```
