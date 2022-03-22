@@ -35,6 +35,8 @@ export BODY_OK4='{"title":"The Breakfast Club","year":1986, "runtime":"96 mins",
 export BODY_OK2a='{"title":"Black Panther","year":2018,"runtime":"134 mins","genres":["sci-fi","action","adventure"]}'
 
 curl -i -d "$BODY" localhost:4000/v1/movies
+
+curl -X DELETE localhost:4000/v1/movies/3
 ```
 
 ### DB Migrations
