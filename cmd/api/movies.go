@@ -233,7 +233,6 @@ func (app *application) listMoviesHandler(w http.ResponseWriter, r *http.Request
 	// Extract the sort query string value, falling back to "id" if it is not provided
 	// by the client (which will imply an ascending sort on movie ID)
 	input.Filters.Sort = app.readString(qs, "sort", "id")
-
 	input.Filters.SortSafelist = []string{"id", "title", "year", "runtime", "-id", "-title", "-year", "-runtime"}
 
 	// Execute the validation checks on the Filters struct and send a response
@@ -243,5 +242,17 @@ func (app *application) listMoviesHandler(w http.ResponseWriter, r *http.Request
 		return
 	}
 
-	fmt.Fprintf(w, "%+v\n", input)
+	// Call the GetAll() method to retrieve the movies, passing in the various filter
+	// parameters.
+	movies, err := app.models.Movies.GetAll(input.Title, input.Genres, input.Filters)
+	if err != nil {
+		app.serverErrorResponse(w, r, err)
+		return
+	}
+
+	// Send a JSON response containing the movie data
+	err = app.writeJSON(w, http.StatusOK, envelope{"movies": movies}, nil)
+	if err != nil {
+		app.serverErrorResponse(w, r, err)
+	}
 }
