@@ -37,6 +37,8 @@ export BODY_OK2a='{"title":"Black Panther","year":2018,"runtime":"134 mins","gen
 curl -i -d "$BODY" localhost:4000/v1/movies
 
 curl -X DELETE localhost:4000/v1/movies/3
+
+curl -w '\nTime: %{time_total}s \n' localhost:4000/v1/movies/1
 ```
 
 ### DB Migrations
