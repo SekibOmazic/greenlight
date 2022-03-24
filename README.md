@@ -49,4 +49,7 @@ migrate create -seq -ext=.sql -dir=./migrations create_movies_table
 migrate create -seq -ext=.sql -dir=./migrations add_movies_check_constraints
 
 migrate -path=./migrations -database=$GREENLIGHT_DB_DSN up
+
+migrate create -seq -ext .sql -dir ./migrations add_movies_indexes
+migrate -path ./migrations -database $GREENLIGHT_DB_DSN up
 ```
