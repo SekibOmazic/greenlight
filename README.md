@@ -39,6 +39,16 @@ curl -i -d "$BODY" localhost:4000/v1/movies
 curl -X DELETE localhost:4000/v1/movies/3
 
 curl -w '\nTime: %{time_total}s \n' localhost:4000/v1/movies/1
+
+BODY_USER='{“name": "Alice Smith", "email": "alice@example.com", "password": "pa55word"}'
+
+curl -i -d "$BODY_USER" http://localhost:4000/v1/users
+
+BODY_USER_INVALID='{"name": "", "email": "bob@invalid.", "password": "pass"}'
+
+curl -i -d "$BODY_USER_INVALID" http://localhost:4000/v1/users
+
+BODY_USER_DUPLICATE='{"name": "Alice Jones", "email": "alice@example.com", "password": "pa55word"}'
 ```
 
 ### DB Migrations
